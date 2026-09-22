@@ -2,5 +2,7 @@
   "name": "SkillSync - Industry & Skill Alignment Hub",
   "description": "Aligning skill development programs with industry job market demand through Student Skill Evaluation, Employer Parity Validation, and Government Workforce Analytics.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
