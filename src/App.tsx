@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { DashboardRole, StudentAssessedSkill, OnGroundParityReport } from './types';
 import { ON_GROUND_PARITY_REPORTS, DISTRICT_MARKET_DATA } from './data/mockData';
 import { Navbar } from './components/Navbar';
+import { HeroBanner } from './components/HeroBanner';
 import { StudentDashboard } from './components/student/StudentDashboard';
 import { EmployerDashboard } from './components/employer/EmployerDashboard';
 import { GovernmentDashboard } from './components/government/GovernmentDashboard';
@@ -45,8 +46,8 @@ export default function App() {
   ).length;
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] text-[#292A27] flex flex-col font-sans selection:bg-[#E8C7B8] selection:text-[#292A27]">
-      {/* Navigation & Persona Switcher */}
+    <div className="min-h-screen bg-[#FAF7F2] text-[#0F172A] flex flex-col font-sans selection:bg-[#1E3A8A] selection:text-[#FFFFFF]">
+      {/* Navigation Header */}
       <Navbar
         currentRole={currentRole}
         onRoleChange={setCurrentRole}
@@ -56,6 +57,16 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Prominent Contrasting Hero Banner with Big Bold Headline & Dark Tone Switchers */}
+        <HeroBanner
+          currentRole={currentRole}
+          onRoleChange={setCurrentRole}
+          studentSkillCount={assessedSkills.length}
+          uncoveredGapCount={totalUncoveredGaps}
+          parityReportCount={parityReports.length}
+        />
+
+        {/* Selected Dashboard Workspace */}
         {currentRole === 'student' && (
           <StudentDashboard
             assessedSkills={assessedSkills}
@@ -74,17 +85,17 @@ export default function App() {
         {currentRole === 'government' && <GovernmentDashboard />}
       </main>
 
-      {/* Minimal Editorial Footer */}
-      <footer className="border-t border-[#DED8CE] bg-[#FFFDFC] py-6 text-center text-xs text-[#6F706A]">
+      {/* Editorial Footer */}
+      <footer className="border-t border-[#DED8CE] bg-[#FFFDFC] py-6 text-center text-xs text-[#64748B]">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="tracking-wide">
-            <span className="font-serif font-semibold text-[#292A27]">SkillSync</span> — Grounding educational curriculum in real industry demand and regional employment data.
+            <span className="font-serif font-semibold text-[#0F172A]">SkillSync</span> — Grounding educational curriculum in real industry demand and regional employment data.
           </p>
-          <div className="flex items-center gap-3 text-[#6F706A] font-medium text-[11px]">
+          <div className="flex items-center gap-3 text-[#64748B] font-medium text-[11px]">
             <span>Student Assessment</span>
-            <span className="text-[#DED8CE]">•</span>
+            <span className="text-[#CBD5E1]">•</span>
             <span>Employer Audit</span>
-            <span className="text-[#DED8CE]">•</span>
+            <span className="text-[#CBD5E1]">•</span>
             <span>Policy Planning</span>
           </div>
         </div>

@@ -153,7 +153,6 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         (s) => s.skillName.toLowerCase() === reqSkill.toLowerCase()
       );
       if (userSkill) {
-        // scale by score (e.g. 60% score gives 0.6 factor)
         return acc + userSkill.score / 100;
       }
       return acc;
@@ -179,41 +178,41 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
   return (
     <div className="space-y-8 pb-12">
-      {/* Calm, Warm Organic Header Banner */}
-      <div className="bg-[#FFFDFC] border border-[#DED8CE] rounded-xl p-6 text-[#292A27] shadow-xs relative overflow-hidden">
+      {/* Dark Tone Header Box */}
+      <div className="bg-[#131D2A] border border-[#223348] rounded-xl p-6 text-[#F8FAFC] shadow-md relative overflow-hidden">
         <div className="max-w-3xl">
           <div className="flex items-center gap-2 mb-2">
-            <span className="px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-[#EEF3EE] text-[#586F5E] border border-[#9AAA8F]/40">
+            <span className="px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-[#1E2E44] text-[#60A5FA] border border-[#2563EB]/40">
               Student Career &amp; Skill Diagnostic
             </span>
-            <span className="text-xs text-[#6F706A]">Personalized Roadmap</span>
+            <span className="text-xs text-[#94A3B8]">Personalized Roadmap</span>
           </div>
-          <h2 className="text-2xl font-serif font-bold tracking-tight mb-2 text-[#292A27]">
+          <h2 className="text-2xl font-serif font-bold tracking-tight mb-2 text-[#FFFFFF]">
             Evaluate Real Capabilities, Uncover Gaps, Match Opportunities
           </h2>
-          <p className="text-sm text-[#6F706A] leading-relaxed">
+          <p className="text-sm text-[#94A3B8] leading-relaxed">
             Conventional grades often diverge from industry expectations. Add a skill like{' '}
-            <strong className="text-[#292A27] font-semibold">Python</strong>, evaluate your practical
-            proficiency (e.g. <span className="font-semibold text-[#718C78] underline decoration-[#9AAA8F]">60%</span>) via scenario questions, choose your target goal (e.g.{' '}
-            <strong className="text-[#292A27] font-semibold">Machine Learning Engineer</strong>), and
+            <strong className="text-[#FFFFFF] font-semibold">Python</strong>, evaluate your practical
+            proficiency (e.g. <span className="font-semibold text-[#60A5FA] underline decoration-[#2563EB]">60%</span>) via scenario questions, choose your target goal (e.g.{' '}
+            <strong className="text-[#FFFFFF] font-semibold">Machine Learning Engineer</strong>), and
             bridge the verified delta with accredited curriculum tracks and live job openings.
           </p>
         </div>
       </div>
 
-      {/* SECTION 1: Add a Skill & Evaluate */}
-      <div className="bg-[#FFFDFC] border border-[#DED8CE] rounded-xl p-6 shadow-xs">
+      {/* SECTION 1: Dark Tone Box: Add & Evaluate Skills */}
+      <div className="bg-[#131D2A] border border-[#223348] rounded-xl p-6 shadow-md text-[#F8FAFC]">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-md bg-[#EEF3EE] text-[#586F5E] border border-[#9AAA8F]/50 flex items-center justify-center text-xs font-serif font-bold">
+              <span className="w-6 h-6 rounded-md bg-[#1E3A8A] text-[#FFFFFF] border border-[#3B82F6]/50 flex items-center justify-center text-xs font-serif font-bold">
                 1
               </span>
-              <h3 className="text-lg font-serif font-bold text-[#292A27]">
+              <h3 className="text-lg font-serif font-bold text-[#FFFFFF]">
                 Add &amp; Evaluate Your Skills
               </h3>
             </div>
-            <p className="text-xs text-[#6F706A] mt-0.5">
+            <p className="text-xs text-[#94A3B8] mt-0.5">
               Take quick scenario assessments to test your technical competence against verified industry criteria
             </p>
           </div>
@@ -226,12 +225,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               placeholder="e.g. PyTorch, TypeScript..."
               value={customSkillName}
               onChange={(e) => setCustomSkillName(e.target.value)}
-              className="px-3.5 py-2 rounded-lg bg-[#FAF7F2] border border-[#DED8CE] text-sm text-[#292A27] placeholder-[#6F706A]/70 focus:outline-none focus:border-[#718C78]"
+              className="px-3.5 py-2 rounded-lg bg-[#0B1320] border border-[#2A3F58] text-sm text-[#FFFFFF] placeholder-[#64748B] focus:outline-none focus:border-[#38BDF8]"
             />
             <button
               id="add-custom-skill-btn"
               type="submit"
-              className="px-3.5 py-2 rounded-lg bg-[#718C78] hover:bg-[#586F5E] text-[#FFFDFC] text-xs font-medium flex items-center gap-1.5 transition border border-[#586F5E]/30 shadow-xs"
+              className="px-3.5 py-2 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-[#FFFFFF] text-xs font-medium flex items-center gap-1.5 transition border border-[#3B82F6]/40 shadow-xs"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Evaluate</span>
@@ -241,7 +240,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
         {/* Popular Skills Quick Assess Grid */}
         <div className="mb-6">
-          <span className="text-[11px] font-semibold text-[#6F706A] uppercase tracking-wider block mb-3">
+          <span className="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider block mb-3">
             Quick Assess Available Skills:
           </span>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
@@ -254,27 +253,27 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   key={sk.id}
                   id={`assess-skill-${sk.id}`}
                   onClick={() => setActiveQuizSkill(sk)}
-                  className={`p-3 rounded-lg border text-left transition-all flex flex-col justify-between ${
+                  className={`p-3 rounded-lg border text-left transition-all flex flex-col justify-between cursor-pointer ${
                     alreadyAssessed
-                      ? 'border-[#9AAA8F] bg-[#EEF3EE]/60 hover:bg-[#EEF3EE]'
-                      : 'border-[#DED8CE] bg-[#FAF7F2] hover:border-[#9AAA8F] hover:bg-[#FFFDFC]'
+                      ? 'border-[#2563EB] bg-[#1A2636] hover:bg-[#1E2D42]'
+                      : 'border-[#223348] bg-[#0F1724] hover:border-[#3B82F6] hover:bg-[#162132]'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-sm font-medium text-[#292A27]">
+                    <span className="text-sm font-medium text-[#FFFFFF]">
                       {sk.name}
                     </span>
                     {alreadyAssessed ? (
-                      <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#718C78] text-[#FFFDFC]">
+                      <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#2563EB] text-[#FFFFFF]">
                         {alreadyAssessed.score}%
                       </span>
                     ) : (
-                      <span className="text-[10px] text-[#6F706A] font-normal">
+                      <span className="text-[10px] text-[#94A3B8] font-normal">
                         3-5 Qs
                       </span>
                     )}
                   </div>
-                  <span className="text-[11px] text-[#6F706A]">
+                  <span className="text-[11px] text-[#94A3B8]">
                     {alreadyAssessed ? 'Click to re-evaluate' : 'Start assessment →'}
                   </span>
                 </button>
@@ -286,22 +285,22 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         {/* Current Assessed Skills Portfolio */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-[11px] font-semibold text-[#6F706A] uppercase tracking-wider">
+            <h4 className="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider">
               Your Evaluated Skills Portfolio ({assessedSkills.length}):
             </h4>
-            <span className="text-[11px] text-[#6F706A]">
+            <span className="text-[11px] text-[#64748B]">
               Scores reflect verified scenario test benchmarks
             </span>
           </div>
 
           {assessedSkills.length === 0 ? (
-            <div className="p-6 rounded-lg border border-dashed border-[#DED8CE] bg-[#FAF7F2] text-center">
-              <p className="text-sm text-[#6F706A] mb-2">
+            <div className="p-6 rounded-lg border border-dashed border-[#2A3F58] bg-[#0F1724] text-center">
+              <p className="text-sm text-[#94A3B8] mb-2">
                 No skills evaluated yet. Click on any skill above (like Python) to test your baseline!
               </p>
               <button
                 onClick={() => setActiveQuizSkill(POPULAR_SKILLS[0])}
-                className="px-4 py-2 rounded-lg bg-[#C9826B] text-[#FFFDFC] text-xs font-medium hover:bg-[#B26E58] transition shadow-xs border border-[#B26E58]/30"
+                className="px-4 py-2 rounded-lg bg-[#2563EB] text-[#FFFFFF] text-xs font-medium hover:bg-[#1D4ED8] transition shadow-xs"
               >
                 Assess Python (5 Questions)
               </button>
@@ -311,37 +310,37 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               {assessedSkills.map((item) => (
                 <div
                   key={item.skillId}
-                  className="p-4 rounded-lg border border-[#DED8CE] bg-[#FAF7F2] flex flex-col justify-between"
+                  className="p-4 rounded-lg border border-[#2A3F58] bg-[#0F1724] flex flex-col justify-between"
                 >
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h5 className="text-sm font-semibold text-[#292A27]">{item.skillName}</h5>
-                      <span className="text-[11px] text-[#6F706A]">
+                      <h5 className="text-sm font-semibold text-[#FFFFFF]">{item.skillName}</h5>
+                      <span className="text-[11px] text-[#94A3B8]">
                         Assessed level: {item.level}
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className="text-lg font-serif font-bold text-[#718C78]">
+                      <span className="text-lg font-serif font-bold text-[#60A5FA]">
                         {item.score}%
                       </span>
                     </div>
                   </div>
 
-                  {/* Progress bar */}
-                  <div className="w-full bg-[#DED8CE]/60 h-2 rounded-full overflow-hidden mb-3">
+                  {/* Progress bar in navy/cyan accent */}
+                  <div className="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden mb-3">
                     <div
                       className={`h-full rounded-full transition-all duration-300 ${
                         item.score >= 80
-                          ? 'bg-[#718C78]'
+                          ? 'bg-[#38BDF8]'
                           : item.score >= 50
-                          ? 'bg-[#9AAA8F]'
+                          ? 'bg-[#2563EB]'
                           : 'bg-[#C9826B]'
                       }`}
                       style={{ width: `${item.score}%` }}
                     />
                   </div>
 
-                  <div className="flex items-center justify-between text-xs pt-2 border-t border-[#DED8CE]">
+                  <div className="flex items-center justify-between text-xs pt-2 border-t border-[#1E2D44]">
                     <button
                       onClick={() => {
                         const sk =
@@ -353,14 +352,14 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                           };
                         setActiveQuizSkill(sk);
                       }}
-                      className="text-[#718C78] hover:text-[#586F5E] font-medium flex items-center gap-1"
+                      className="text-[#60A5FA] hover:text-[#93C5FD] font-medium flex items-center gap-1 cursor-pointer"
                     >
                       <RotateCcw className="w-3 h-3" />
                       <span>Retake Test</span>
                     </button>
                     <button
                       onClick={() => handleRemoveSkill(item.skillId)}
-                      className="text-[#6F706A] hover:text-[#C9826B] transition text-[11px]"
+                      className="text-[#64748B] hover:text-[#E07A5F] transition text-[11px] cursor-pointer"
                     >
                       Remove
                     </button>
@@ -372,31 +371,31 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         </div>
       </div>
 
-      {/* SECTION 2: Select a Goal (e.g. ML Eng) & Skill Gap Analysis */}
-      <div className="bg-[#FFFDFC] border border-[#DED8CE] rounded-xl p-6 shadow-xs">
+      {/* SECTION 2: Dark Tone Box: Select a Goal & Gap Analysis */}
+      <div className="bg-[#131D2A] border border-[#223348] rounded-xl p-6 shadow-md text-[#F8FAFC]">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-md bg-[#FAF1ED] text-[#C9826B] border border-[#E8C7B8] flex items-center justify-center text-xs font-serif font-bold">
+              <span className="w-6 h-6 rounded-md bg-[#1E3A8A] text-[#FFFFFF] border border-[#3B82F6]/50 flex items-center justify-center text-xs font-serif font-bold">
                 2
               </span>
-              <h3 className="text-lg font-serif font-bold text-[#292A27]">
+              <h3 className="text-lg font-serif font-bold text-[#FFFFFF]">
                 Select Your Career Goal &amp; Analyze Skill Gaps
               </h3>
             </div>
-            <p className="text-xs text-[#6F706A] mt-0.5">
+            <p className="text-xs text-[#94A3B8] mt-0.5">
               Compare your current evaluated skill level against real industry hiring criteria
             </p>
           </div>
 
           {/* Goal Selector */}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-[#6F706A] font-medium">Target Role:</span>
+            <span className="text-xs text-[#94A3B8] font-medium">Target Role:</span>
             <select
               id="career-goal-select"
               value={selectedGoalId}
               onChange={(e) => setSelectedGoalId(e.target.value)}
-              className="bg-[#FAF7F2] border border-[#DED8CE] text-[#292A27] text-sm font-medium rounded-lg px-3 py-2 focus:outline-none focus:border-[#718C78]"
+              className="bg-[#0B1320] border border-[#2A3F58] text-[#FFFFFF] text-sm font-medium rounded-lg px-3 py-2 focus:outline-none focus:border-[#38BDF8]"
             >
               {CAREER_GOALS.map((goal) => (
                 <option key={goal.id} value={goal.id}>
@@ -407,49 +406,49 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           </div>
         </div>
 
-        {/* Selected Goal Highlight Box */}
-        <div className="bg-[#FAF7F2] border border-[#DED8CE] rounded-xl p-5 mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* Selected Goal Highlight Box in Dark Tone */}
+        <div className="bg-[#0B1320] border border-[#223348] rounded-xl p-5 mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-1">
-              <Target className="w-5 h-5 text-[#C9826B]" />
-              <h4 className="text-base font-serif font-bold text-[#292A27]">{selectedGoal.title}</h4>
-              <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-[#EEF3EE] text-[#586F5E] border border-[#9AAA8F]/40">
+              <Target className="w-5 h-5 text-[#38BDF8]" />
+              <h4 className="text-base font-serif font-bold text-[#FFFFFF]">{selectedGoal.title}</h4>
+              <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-[#1E2E44] text-[#60A5FA] border border-[#2563EB]/40">
                 {selectedGoal.growthRate}
               </span>
             </div>
-            <p className="text-xs text-[#6F706A] leading-relaxed">
+            <p className="text-xs text-[#94A3B8] leading-relaxed">
               {selectedGoal.description}
             </p>
           </div>
 
-          <div className="p-3 bg-[#FFFDFC] rounded-lg border border-[#DED8CE]">
-            <span className="text-[11px] text-[#6F706A] uppercase tracking-wider font-semibold block">
+          <div className="p-3 bg-[#131D2A] rounded-lg border border-[#223348]">
+            <span className="text-[11px] text-[#94A3B8] uppercase tracking-wider font-semibold block">
               Market Compensation
             </span>
-            <span className="text-sm font-semibold text-[#292A27] block mt-1">
+            <span className="text-sm font-semibold text-[#FFFFFF] block mt-1">
               {selectedGoal.averageSalary}
             </span>
-            <span className="text-[10px] text-[#6F706A]">
+            <span className="text-[10px] text-[#64748B]">
               Verified by Q3 tech hiring benchmarks
             </span>
           </div>
 
-          <div className="p-3 bg-[#FFFDFC] rounded-lg border border-[#DED8CE] flex flex-col justify-between">
+          <div className="p-3 bg-[#131D2A] rounded-lg border border-[#223348] flex flex-col justify-between">
             <div className="flex justify-between items-center">
-              <span className="text-[11px] text-[#6F706A] uppercase tracking-wider font-semibold">
+              <span className="text-[11px] text-[#94A3B8] uppercase tracking-wider font-semibold">
                 Your Readiness
               </span>
-              <span className="text-base font-serif font-bold text-[#718C78]">
+              <span className="text-base font-serif font-bold text-[#60A5FA]">
                 {overallReadiness}%
               </span>
             </div>
-            <div className="w-full bg-[#DED8CE]/60 h-2 rounded-full overflow-hidden my-1.5">
+            <div className="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden my-1.5">
               <div
-                className="bg-[#718C78] h-full rounded-full transition-all duration-500"
+                className="bg-[#2563EB] h-full rounded-full transition-all duration-500"
                 style={{ width: `${overallReadiness}%` }}
               />
             </div>
-            <span className="text-[10px] text-[#6F706A]">
+            <span className="text-[10px] text-[#94A3B8]">
               {overallReadiness >= 75
                 ? 'Strong candidate for entry/associate roles'
                 : 'Gap closure required before applying to top tiers'}
@@ -457,10 +456,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           </div>
         </div>
 
-        {/* Required Skill Set Table & Gap Visualization */}
-        <div className="overflow-x-auto rounded-lg border border-[#DED8CE]">
-          <table className="w-full text-left text-sm text-[#292A27]">
-            <thead className="bg-[#FAF7F2] text-[11px] uppercase tracking-wider text-[#6F706A] border-b border-[#DED8CE]">
+        {/* Required Skill Set Table & Gap Visualization in Dark Tone */}
+        <div className="overflow-x-auto rounded-lg border border-[#223348]">
+          <table className="w-full text-left text-sm text-[#F8FAFC]">
+            <thead className="bg-[#0B1320] text-[11px] uppercase tracking-wider text-[#94A3B8] border-b border-[#223348]">
               <tr>
                 <th className="py-3 px-4">Required Skill Set</th>
                 <th className="py-3 px-4">Importance</th>
@@ -470,11 +469,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 <th className="py-3 px-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#DED8CE] font-normal bg-[#FFFDFC]">
+            <tbody className="divide-y divide-[#1E2D44] font-normal bg-[#0F1724]">
               {skillGapBreakdown.map((row) => (
-                <tr key={row.skillName} className="hover:bg-[#FAF7F2]/60 transition">
+                <tr key={row.skillName} className="hover:bg-[#162132]/60 transition">
                   <td className="py-3.5 px-4">
-                    <span className="font-medium text-[#292A27] block">
+                    <span className="font-medium text-[#FFFFFF] block">
                       {row.skillName}
                     </span>
                   </td>
@@ -482,52 +481,52 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     <span
                       className={`px-2 py-0.5 rounded text-[11px] font-medium ${
                         row.importance === 'Core'
-                          ? 'bg-[#FAF1ED] text-[#C9826B] border border-[#E8C7B8]'
+                          ? 'bg-[#2A1810] text-[#E07A5F] border border-[#C9826B]/50'
                           : row.importance === 'Recommended'
-                          ? 'bg-[#EEF3EE] text-[#586F5E] border border-[#9AAA8F]/40'
-                          : 'bg-[#F5F0E8] text-[#6F706A] border border-[#DED8CE]'
+                          ? 'bg-[#1E2E44] text-[#60A5FA] border border-[#2563EB]/40'
+                          : 'bg-[#1E293B] text-[#94A3B8] border border-[#334155]'
                       }`}
                     >
                       {row.importance}
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 font-mono text-[#292A27]">
+                  <td className="py-3.5 px-4 font-mono text-[#FFFFFF]">
                     {row.requiredScore}%
                   </td>
                   <td className="py-3.5 px-4">
                     {row.currentScore > 0 ? (
                       <div className="flex items-center gap-2">
-                        <span className="font-mono font-semibold text-[#292A27]">
+                        <span className="font-mono font-semibold text-[#FFFFFF]">
                           {row.currentScore}%
                         </span>
-                        <div className="w-16 bg-[#DED8CE]/60 h-1.5 rounded-full overflow-hidden">
+                        <div className="w-16 bg-[#1E293B] h-1.5 rounded-full overflow-hidden">
                           <div
                             className={`h-full ${
-                              row.isMet ? 'bg-[#718C78]' : 'bg-[#C9826B]'
+                              row.isMet ? 'bg-[#38BDF8]' : 'bg-[#C9826B]'
                             }`}
                             style={{ width: `${row.currentScore}%` }}
                           />
                         </div>
                       </div>
                     ) : (
-                      <span className="text-[#6F706A] text-xs italic">
+                      <span className="text-[#64748B] text-xs italic">
                         Not evaluated yet (0%)
                       </span>
                     )}
                   </td>
                   <td className="py-3.5 px-4">
                     {row.isMet ? (
-                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#586F5E]">
-                        <CheckCircle2 className="w-4 h-4 text-[#718C78]" />
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#38BDF8]">
+                        <CheckCircle2 className="w-4 h-4 text-[#38BDF8]" />
                         Qualified (Met)
                       </span>
                     ) : row.currentScore > 0 ? (
-                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#C9826B]">
-                        <AlertCircle className="w-4 h-4 text-[#C9826B]" />
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#E07A5F]">
+                        <AlertCircle className="w-4 h-4 text-[#E07A5F]" />
                         {row.gap}% Gap to Bridge
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#B26E58]">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#C9826B]">
                         <AlertCircle className="w-4 h-4 text-[#C9826B]" />
                         Missing Core Skill (-{row.requiredScore}%)
                       </span>
@@ -546,7 +545,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                         };
                         setActiveQuizSkill(matched);
                       }}
-                      className="px-2.5 py-1 rounded-md text-xs font-medium bg-[#FAF7F2] hover:bg-[#718C78] hover:text-[#FFFDFC] text-[#292A27] border border-[#DED8CE] transition"
+                      className="px-2.5 py-1 rounded-md text-xs font-medium bg-[#1E293B] hover:bg-[#2563EB] text-[#FFFFFF] border border-[#334155] transition cursor-pointer"
                     >
                       {row.currentScore > 0 ? 'Retest' : 'Assess Now'}
                     </button>
@@ -558,25 +557,25 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         </div>
       </div>
 
-      {/* SECTION 3: Guided Courses to Bridge the Gap */}
-      <div className="bg-[#FFFDFC] border border-[#DED8CE] rounded-xl p-6 shadow-xs">
+      {/* SECTION 3: Dark Tone Box: Guided Courses to Bridge the Gap */}
+      <div className="bg-[#131D2A] border border-[#223348] rounded-xl p-6 shadow-md text-[#F8FAFC]">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2.5">
-            <span className="w-6 h-6 rounded-md bg-[#EEF3EE] text-[#586F5E] border border-[#9AAA8F]/50 flex items-center justify-center text-xs font-serif font-bold">
+            <span className="w-6 h-6 rounded-md bg-[#1E3A8A] text-[#FFFFFF] border border-[#3B82F6]/50 flex items-center justify-center text-xs font-serif font-bold">
               3
             </span>
             <div>
-              <h3 className="text-lg font-serif font-bold text-[#292A27]">
+              <h3 className="text-lg font-serif font-bold text-[#FFFFFF]">
                 Recommended Curriculum to Close Gaps
               </h3>
-              <p className="text-xs text-[#6F706A]">
+              <p className="text-xs text-[#94A3B8]">
                 Accredited vocational and industry tracks targeting your exact deficits for{' '}
-                <span className="text-[#292A27] font-semibold">{selectedGoal.title}</span>
+                <span className="text-[#FFFFFF] font-semibold">{selectedGoal.title}</span>
               </p>
             </div>
           </div>
-          <span className="text-xs font-medium text-[#586F5E] flex items-center gap-1 bg-[#EEF3EE] px-3 py-1 rounded-md border border-[#9AAA8F]/40">
-            <Sparkles className="w-3.5 h-3.5 text-[#718C78]" />
+          <span className="text-xs font-medium text-[#60A5FA] flex items-center gap-1 bg-[#1E2E44] px-3 py-1 rounded-md border border-[#2563EB]/40">
+            <Sparkles className="w-3.5 h-3.5 text-[#38BDF8]" />
             Curriculum Aligned
           </span>
         </div>
@@ -587,33 +586,33 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             return (
               <div
                 key={course.id}
-                className="bg-[#FAF7F2] border border-[#DED8CE] rounded-xl p-5 flex flex-col justify-between hover:border-[#9AAA8F] transition"
+                className="bg-[#0F1724] border border-[#223348] rounded-xl p-5 flex flex-col justify-between hover:border-[#38BDF8] transition"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-2">
-                    <h4 className="text-base font-serif font-bold text-[#292A27]">
+                    <h4 className="text-base font-serif font-bold text-[#FFFFFF]">
                       {course.title}
                     </h4>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#FFFDFC] border border-[#DED8CE] text-[#6F706A] shrink-0">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#1E293B] border border-[#334155] text-[#94A3B8] shrink-0">
                       ★ {course.rating}
                     </span>
                   </div>
-                  <p className="text-xs text-[#6F706A] mb-3">
-                    Provider: <span className="text-[#292A27] font-medium">{course.provider}</span> • {course.duration}
+                  <p className="text-xs text-[#94A3B8] mb-3">
+                    Provider: <span className="text-[#FFFFFF] font-medium">{course.provider}</span> • {course.duration}
                   </p>
 
                   {/* Skills covered */}
                   <div className="mb-4">
-                    <span className="text-[11px] text-[#6F706A] font-semibold uppercase tracking-wider block mb-1.5">
+                    <span className="text-[11px] text-[#94A3B8] font-semibold uppercase tracking-wider block mb-1.5">
                       Bridges These Gaps:
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {course.coversGaps.map((gap, i) => (
                         <span
                           key={i}
-                          className="px-2 py-0.5 rounded-md text-xs font-medium bg-[#EEF3EE] text-[#586F5E] border border-[#9AAA8F]/40 flex items-center gap-1"
+                          className="px-2 py-0.5 rounded-md text-xs font-medium bg-[#1E2E44] text-[#60A5FA] border border-[#2563EB]/40 flex items-center gap-1"
                         >
-                          <CheckCircle2 className="w-3 h-3 text-[#718C78]" />
+                          <CheckCircle2 className="w-3 h-3 text-[#38BDF8]" />
                           {gap}
                         </span>
                       ))}
@@ -621,8 +620,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-3 border-t border-[#DED8CE]">
-                  <span className="text-xs text-[#6F706A]">
+                <div className="flex items-center justify-between pt-3 border-t border-[#1E2D44]">
+                  <span className="text-xs text-[#94A3B8]">
                     Level: {course.level}
                   </span>
                   <button
@@ -631,14 +630,14 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                         setEnrolledCourses([...enrolledCourses, course.id]);
                       }
                     }}
-                    className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 border shadow-xs ${
+                    className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 border shadow-xs cursor-pointer ${
                       isEnrolled
-                        ? 'bg-[#EEF3EE] text-[#586F5E] border-[#9AAA8F] cursor-default'
-                        : 'bg-[#718C78] hover:bg-[#586F5E] text-[#FFFDFC] border-[#586F5E]/30'
+                        ? 'bg-[#1E2E44] text-[#60A5FA] border-[#2563EB]/40 cursor-default'
+                        : 'bg-[#2563EB] hover:bg-[#1D4ED8] text-[#FFFFFF] border-[#3B82F6]/40'
                     }`}
                   >
                     <BookOpen className="w-3.5 h-3.5" />
-                    <span>{isEnrolled ? '✓ Enrolled in Pathway' : 'Enroll in Track'}</span>
+                    <span>{isEnrolled ? '✓ Enrolled in Track' : 'Enroll in Track'}</span>
                   </button>
                 </div>
               </div>
@@ -647,51 +646,51 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         </div>
       </div>
 
-      {/* SECTION 4: Live Job Openings based on Current Skill Level */}
-      <div className="bg-[#FFFDFC] border border-[#DED8CE] rounded-xl p-6 shadow-xs">
+      {/* SECTION 4: Dark Tone Box: Live Job Openings */}
+      <div className="bg-[#131D2A] border border-[#223348] rounded-xl p-6 shadow-md text-[#F8FAFC]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-2.5">
-            <span className="w-6 h-6 rounded-md bg-[#FAF1ED] text-[#C9826B] border border-[#E8C7B8] flex items-center justify-center text-xs font-serif font-bold">
+            <span className="w-6 h-6 rounded-md bg-[#1E3A8A] text-[#FFFFFF] border border-[#3B82F6]/50 flex items-center justify-center text-xs font-serif font-bold">
               4
             </span>
             <div>
-              <h3 className="text-lg font-serif font-bold text-[#292A27]">
+              <h3 className="text-lg font-serif font-bold text-[#FFFFFF]">
                 Job Openings Matching Current Skill Level
               </h3>
-              <p className="text-xs text-[#6F706A]">
+              <p className="text-xs text-[#94A3B8]">
                 Dynamic suitability score calculated from your verified evaluated skills
               </p>
             </div>
           </div>
 
-          {/* Filter Pills */}
-          <div className="flex items-center bg-[#FAF7F2] p-1 rounded-lg border border-[#DED8CE] text-xs font-medium">
+          {/* Filter Buttons in Dark Tone */}
+          <div className="flex items-center bg-[#0B1320] p-1 rounded-lg border border-[#223348] text-xs font-medium">
             <button
               onClick={() => setJobFilter('all')}
-              className={`px-3 py-1.5 rounded-md transition ${
+              className={`px-3 py-1.5 rounded-md transition cursor-pointer ${
                 jobFilter === 'all'
-                  ? 'bg-[#FFFDFC] text-[#292A27] shadow-xs border border-[#DED8CE]'
-                  : 'text-[#6F706A] hover:text-[#292A27]'
+                  ? 'bg-[#2563EB] text-[#FFFFFF] shadow-xs'
+                  : 'text-[#94A3B8] hover:text-[#FFFFFF]'
               }`}
             >
               All Openings ({calculatedJobs.length})
             </button>
             <button
               onClick={() => setJobFilter('ready')}
-              className={`px-3 py-1.5 rounded-md transition ${
+              className={`px-3 py-1.5 rounded-md transition cursor-pointer ${
                 jobFilter === 'ready'
-                  ? 'bg-[#718C78] text-[#FFFDFC] shadow-xs'
-                  : 'text-[#6F706A] hover:text-[#292A27]'
+                  ? 'bg-[#0284C7] text-[#FFFFFF] shadow-xs'
+                  : 'text-[#94A3B8] hover:text-[#FFFFFF]'
               }`}
             >
               Eligible (≥60% Match)
             </button>
             <button
               onClick={() => setJobFilter('needs_upskill')}
-              className={`px-3 py-1.5 rounded-md transition ${
+              className={`px-3 py-1.5 rounded-md transition cursor-pointer ${
                 jobFilter === 'needs_upskill'
-                  ? 'bg-[#C9826B] text-[#FFFDFC] shadow-xs'
-                  : 'text-[#6F706A] hover:text-[#292A27]'
+                  ? 'bg-[#C9826B] text-[#FFFFFF] shadow-xs'
+                  : 'text-[#94A3B8] hover:text-[#FFFFFF]'
               }`}
             >
               Needs Upskilling (&lt;60%)
@@ -699,7 +698,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           </div>
         </div>
 
-        {/* Job Listings Grid */}
+        {/* Job Listings Grid in Dark Tone */}
         <div className="space-y-3.5">
           {filteredJobs.map((job) => {
             const matchScore = job.matchingScore || 0;
@@ -709,30 +708,30 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             return (
               <div
                 key={job.id}
-                className="bg-[#FAF7F2] border border-[#DED8CE] rounded-xl p-5 hover:border-[#9AAA8F] transition"
+                className="bg-[#0F1724] border border-[#223348] rounded-xl p-5 hover:border-[#38BDF8] transition"
               >
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                   {/* Job Details */}
                   <div className="space-y-1.5 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h4 className="text-base font-serif font-bold text-[#292A27]">
+                      <h4 className="text-base font-serif font-bold text-[#FFFFFF]">
                         {job.title}
                       </h4>
-                      <span className="text-xs font-medium text-[#292A27] px-2.5 py-0.5 bg-[#FFFDFC] border border-[#DED8CE] rounded-md">
+                      <span className="text-xs font-medium text-[#FFFFFF] px-2.5 py-0.5 bg-[#1E293B] border border-[#334155] rounded-md">
                         {job.company}
                       </span>
-                      <span className="text-xs text-[#6F706A]">
+                      <span className="text-xs text-[#94A3B8]">
                         • {job.location}
                       </span>
                     </div>
 
-                    <p className="text-xs text-[#6F706A] leading-relaxed max-w-3xl">
+                    <p className="text-xs text-[#94A3B8] leading-relaxed max-w-3xl">
                       {job.description}
                     </p>
 
                     {/* Skill Tags */}
                     <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                      <span className="text-[11px] text-[#6F706A] font-medium mr-1">
+                      <span className="text-[11px] text-[#94A3B8] font-medium mr-1">
                         Required:
                       </span>
                       {job.requiredSkills.map((sk, idx) => {
@@ -746,8 +745,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                             key={idx}
                             className={`px-2 py-0.5 rounded text-[11px] font-medium ${
                               hasSkill
-                                ? 'bg-[#EEF3EE] text-[#586F5E] border border-[#9AAA8F]/40'
-                                : 'bg-[#FFFDFC] text-[#6F706A] border border-[#DED8CE]'
+                                ? 'bg-[#1E2E44] text-[#60A5FA] border border-[#2563EB]/40'
+                                : 'bg-[#1E293B] text-[#94A3B8] border border-[#334155]'
                             }`}
                           >
                             {hasSkill ? '✓ ' : ''}{sk}
@@ -757,41 +756,28 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     </div>
                   </div>
 
-                  {/* Match Meter & Apply */}
-                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-3 shrink-0 pt-3 lg:pt-0 border-t lg:border-t-0 border-[#DED8CE]">
-                    <div className="text-right">
-                      <div className="flex items-center gap-1.5 justify-end">
-                        <span className="text-xs text-[#6F706A]">
-                          Skill Match:
-                        </span>
-                        <span
-                          className={`text-base font-serif font-bold ${
-                            isHighMatch
-                              ? 'text-[#586F5E]'
-                              : isMediumMatch
-                              ? 'text-[#C9826B]'
-                              : 'text-[#6F706A]'
-                          }`}
-                        >
-                          {matchScore}%
-                        </span>
-                      </div>
-                      <span className="text-[11px] text-[#6F706A] font-medium block">
-                        {job.salary}
+                  {/* Matching score & Apply Button */}
+                  <div className="flex sm:flex-col items-center sm:items-end justify-between gap-2 shrink-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-[#1E2D44]">
+                    <div className="text-left sm:text-right">
+                      <span className="text-[11px] text-[#94A3B8] block">Match Score:</span>
+                      <span
+                        className={`text-xl font-serif font-bold ${
+                          isHighMatch
+                            ? 'text-[#38BDF8]'
+                            : isMediumMatch
+                            ? 'text-[#60A5FA]'
+                            : 'text-[#E07A5F]'
+                        }`}
+                      >
+                        {matchScore}%
                       </span>
                     </div>
 
-                    {/* Terracotta CTA for high match jobs */}
                     <button
-                      onClick={() => alert(`Application initiated for "${job.title}" at ${job.company}. Your verified SkillSync evaluation profile will be attached.`)}
-                      className={`px-4 py-2 rounded-lg text-xs font-medium transition flex items-center gap-1.5 shadow-xs border ${
-                        isHighMatch
-                          ? 'bg-[#C9826B] hover:bg-[#B26E58] text-[#FFFDFC] border-[#B26E58]/30'
-                          : 'bg-[#FFFDFC] hover:bg-[#F5F0E8] text-[#292A27] border-[#DED8CE]'
-                      }`}
+                      onClick={() => alert(`Redirecting to verified enterprise application portal for ${job.title} at ${job.company}. Skill telemetry attached!`)}
+                      className="px-4 py-2 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-[#FFFFFF] text-xs font-medium transition shadow-xs cursor-pointer border border-[#3B82F6]/40"
                     >
-                      <Briefcase className="w-3.5 h-3.5" />
-                      <span>{isHighMatch ? 'Apply with Profile' : 'View Requirements'}</span>
+                      Apply with Skill Profile →
                     </button>
                   </div>
                 </div>
@@ -801,7 +787,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         </div>
       </div>
 
-      {/* Active Assessment Modal */}
+      {/* Interactive Assessment Modal */}
       {activeQuizSkill && (
         <SkillAssessmentModal
           skill={activeQuizSkill}

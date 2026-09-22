@@ -2,21 +2,19 @@
 
 @theme {
   --color-cream: #FAF7F2;
-  --color-sage: #718C78;
-  --color-sage-dark: #586F5E;
-  --color-sage-light: #EEF3EE;
-  --color-olive: #9AAA8F;
-  --color-olive-light: #F2F5F0;
+  --color-canvas: #F4EFEB;
+  --color-navy: #1E3A8A;
+  --color-navy-dark: #0F172A;
+  --color-navy-light: #EEF2FF;
+  --color-navy-accent: #2563EB;
+  --color-darkbox: #162132;
+  --color-darkbox-alt: #1E293B;
+  --color-darkbox-border: #2D3D54;
   --color-terracotta: #C9826B;
   --color-terracotta-dark: #B26E58;
   --color-terracotta-light: #FAF1ED;
-  --color-peach: #E8C7B8;
-  --color-peach-light: #FBF4F0;
-  --color-charcoal: #292A27;
-  --color-warmgrey: #6F706A;
-  --color-card: #FFFDFC;
-  --color-sand: #DED8CE;
-  --color-sand-light: #F5F0E8;
+  --color-charcoal: #1E293B;
+  --color-warmgrey: #64748B;
 
   --font-serif: 'Newsreader', Georgia, Cambria, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -24,14 +22,14 @@
 
 body {
   background-color: #FAF7F2;
-  color: #292A27;
+  color: #0F172A;
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom editorial selection styling */
+/* Custom selection styling */
 ::selection {
-  background-color: #E8C7B8;
-  color: #292A27;
+  background-color: #1E3A8A;
+  color: #FFFFFF;
 }

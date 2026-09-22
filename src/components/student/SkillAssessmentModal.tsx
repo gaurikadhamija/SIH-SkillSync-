@@ -66,24 +66,24 @@ export const SkillAssessmentModal: React.FC<SkillAssessmentModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#292A27]/40 backdrop-blur-xs p-4 overflow-y-auto">
-      <div className="bg-[#FFFDFC] border border-[#DED8CE] rounded-xl w-full max-w-2xl shadow-lg text-[#292A27] overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#DED8CE] bg-[#FAF7F2]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B1320]/75 backdrop-blur-xs p-4 overflow-y-auto">
+      <div className="bg-[#131D2A] border border-[#223348] rounded-xl w-full max-w-2xl shadow-2xl text-[#FFFFFF] overflow-hidden">
+        {/* Header in Dark Tone with Navy Accent */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#223348] bg-[#0F1724]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-medium px-2 py-0.5 rounded-md bg-[#EEF3EE] text-[#586F5E] border border-[#9AAA8F]/40">
+              <span className="text-xs font-medium px-2 py-0.5 rounded-md bg-[#1E2E44] text-[#60A5FA] border border-[#2563EB]/40">
                 Evaluation Diagnostic
               </span>
-              <h3 className="text-lg font-serif font-bold text-[#292A27]">{skill.name} Assessment</h3>
+              <h3 className="text-lg font-serif font-bold text-[#FFFFFF]">{skill.name} Assessment</h3>
             </div>
-            <p className="text-xs text-[#6F706A] mt-0.5">
+            <p className="text-xs text-[#94A3B8] mt-0.5">
               Verify your practical industry readiness through scenario challenges
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-md text-[#6F706A] hover:text-[#292A27] hover:bg-[#DED8CE]/50 transition"
+            className="p-1.5 rounded-md text-[#94A3B8] hover:text-[#FFFFFF] hover:bg-[#1E293B] transition cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -92,19 +92,19 @@ export const SkillAssessmentModal: React.FC<SkillAssessmentModalProps> = ({
         {/* Content */}
         {!isCompleted ? (
           <div className="p-6">
-            {/* Progress bar */}
+            {/* Progress bar in navy */}
             <div className="mb-5">
-              <div className="flex justify-between text-xs text-[#6F706A] mb-1.5 font-medium">
+              <div className="flex justify-between text-xs text-[#94A3B8] mb-1.5 font-medium">
                 <span>
                   Question {currentQuestionIndex + 1} of {questions.length}
                 </span>
-                <span>
-                  {Math.round(((currentQuestionIndex + 1) / questions.length) * 100)}% Complete
+                <span className="text-[#60A5FA]">
+                  {Math.round(((currentQuestionIndex + 1) / questions.length) * 100)}% Completed
                 </span>
               </div>
-              <div className="w-full bg-[#DED8CE]/60 h-2 rounded-full overflow-hidden">
+              <div className="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden">
                 <div
-                  className="bg-[#718C78] h-full rounded-full transition-all duration-300"
+                  className="bg-[#2563EB] h-full rounded-full transition-all duration-300"
                   style={{
                     width: `${((currentQuestionIndex + 1) / questions.length) * 100}%`,
                   }}
@@ -112,36 +112,33 @@ export const SkillAssessmentModal: React.FC<SkillAssessmentModalProps> = ({
               </div>
             </div>
 
-            {/* Question Text */}
-            <h4 className="text-base font-serif font-semibold text-[#292A27] mb-3">
-              {currentQ.question}
-            </h4>
+            {/* Question Card in Dark Tone */}
+            <div className="bg-[#0F1724] border border-[#223348] rounded-xl p-5 mb-5 shadow-xs">
+              <span className="text-[11px] font-semibold text-[#60A5FA] uppercase tracking-wider block mb-2">
+                Industry Scenario Challenge:
+              </span>
+              <p className="text-base text-[#FFFFFF] font-medium leading-relaxed">
+                {currentQ.question}
+              </p>
+            </div>
 
-            {/* Optional Code Snippet */}
-            {currentQ.codeSnippet && (
-              <pre className="bg-[#292A27] border border-[#292A27] p-3.5 rounded-lg text-xs font-mono text-[#E8C7B8] mb-4 overflow-x-auto">
-                <code>{currentQ.codeSnippet}</code>
-              </pre>
-            )}
-
-            {/* Options */}
-            <div className="space-y-2.5 mb-5">
-              {currentQ.options.map((opt, idx) => {
+            {/* Options in Dark Tone */}
+            <div className="space-y-2.5 mb-6">
+              {currentQ.options.map((option, idx) => {
                 const isSelected = selectedAnswers[currentQuestionIndex] === idx;
                 const isCorrect = idx === currentQ.correctIndex;
-                let optionStyle =
-                  'border-[#DED8CE] bg-[#FAF7F2] hover:bg-[#FFFDFC] text-[#292A27]';
+
+                let optionClasses =
+                  'border-[#2A3F58] bg-[#162132] hover:bg-[#1E2D42] text-[#F8FAFC]';
 
                 if (showExplanation) {
                   if (isCorrect) {
-                    optionStyle = 'border-[#718C78] bg-[#EEF3EE] text-[#292A27] font-medium';
-                  } else if (isSelected) {
-                    optionStyle = 'border-[#C9826B] bg-[#FAF1ED] text-[#292A27]';
-                  } else {
-                    optionStyle = 'border-[#DED8CE] bg-[#FAF7F2]/50 text-[#6F706A]';
+                    optionClasses =
+                      'border-[#38BDF8] bg-[#0C3048] text-[#FFFFFF] ring-1 ring-[#38BDF8]';
+                  } else if (isSelected && !isCorrect) {
+                    optionClasses =
+                      'border-[#C9826B] bg-[#2D1612] text-[#FCA5A5] ring-1 ring-[#C9826B]';
                   }
-                } else if (isSelected) {
-                  optionStyle = 'border-[#718C78] bg-[#EEF3EE] text-[#292A27] font-semibold';
                 }
 
                 return (
@@ -149,14 +146,17 @@ export const SkillAssessmentModal: React.FC<SkillAssessmentModalProps> = ({
                     key={idx}
                     disabled={showExplanation}
                     onClick={() => handleSelectOption(idx)}
-                    className={`w-full text-left p-3.5 rounded-lg border text-sm transition-all flex items-start gap-3 ${optionStyle}`}
+                    className={`w-full p-4 rounded-xl border text-left text-sm transition flex items-center justify-between cursor-pointer ${optionClasses}`}
                   >
-                    <span className="w-6 h-6 rounded-md border border-[#DED8CE] bg-[#FFFDFC] flex items-center justify-center text-xs font-semibold shrink-0 text-[#6F706A]">
-                      {String.fromCharCode(65 + idx)}
-                    </span>
-                    <span className="flex-1">{opt}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="w-6 h-6 rounded-md bg-[#0F1724] border border-[#2A3F58] flex items-center justify-center text-xs font-semibold text-[#94A3B8]">
+                        {String.fromCharCode(65 + idx)}
+                      </span>
+                      <span className="leading-snug">{option}</span>
+                    </div>
+
                     {showExplanation && isCorrect && (
-                      <CheckCircle className="w-5 h-5 text-[#718C78] shrink-0" />
+                      <CheckCircle className="w-5 h-5 text-[#38BDF8] shrink-0" />
                     )}
                     {showExplanation && isSelected && !isCorrect && (
                       <XCircle className="w-5 h-5 text-[#C9826B] shrink-0" />
@@ -166,111 +166,106 @@ export const SkillAssessmentModal: React.FC<SkillAssessmentModalProps> = ({
               })}
             </div>
 
-            {/* Explanation box */}
+            {/* Explanation box in Dark Tone */}
             {showExplanation && (
-              <div className="bg-[#EEF3EE] border border-[#9AAA8F]/50 p-3.5 rounded-lg mb-4 text-xs text-[#292A27]">
-                <div className="flex items-center gap-1.5 font-semibold text-[#586F5E] mb-1">
-                  <HelpCircle className="w-4 h-4 text-[#718C78]" />
-                  <span>Concept Breakdown:</span>
+              <div className="p-4 rounded-xl border border-[#223348] bg-[#0F1724] text-xs text-[#CBD5E1] mb-5 animate-in fade-in">
+                <div className="flex items-center gap-2 mb-1.5 text-[#38BDF8] font-semibold">
+                  <HelpCircle className="w-4 h-4" />
+                  <span>Industry Best Practice Rationale:</span>
                 </div>
-                <p className="text-[#292A27] leading-relaxed">{currentQ.explanation}</p>
+                <p className="leading-relaxed pl-6">{currentQ.explanation}</p>
               </div>
             )}
 
-            {/* Action footer */}
-            <div className="flex items-center justify-between pt-3 border-t border-[#DED8CE]">
-              <span className="text-xs text-[#6F706A]">
-                Select an option to evaluate instantly
-              </span>
+            {/* Footer button */}
+            <div className="flex justify-end pt-3 border-t border-[#223348]">
               {showExplanation ? (
                 <button
-                  id="next-question-btn"
                   onClick={handleNextQuestion}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#718C78] hover:bg-[#586F5E] text-[#FFFDFC] text-sm font-medium transition shadow-xs border border-[#586F5E]/30"
+                  className="px-5 py-2.5 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-[#FFFFFF] text-xs font-medium flex items-center gap-2 transition shadow-xs cursor-pointer border border-[#3B82F6]/40"
                 >
                   <span>
-                    {currentQuestionIndex + 1 === questions.length ? 'View Results' : 'Next Question'}
+                    {currentQuestionIndex + 1 === questions.length
+                      ? 'View Diagnostic Results'
+                      : 'Next Challenge'}
                   </span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               ) : (
-                <button
-                  onClick={() => setIsCompleted(true)}
-                  className="text-xs text-[#6F706A] hover:text-[#292A27] underline"
-                >
-                  Skip to Results &amp; Manual Score
-                </button>
+                <span className="text-xs text-[#94A3B8] italic">
+                  Select an answer above to reveal technical rationale
+                </span>
               )}
             </div>
           </div>
         ) : (
-          /* Completion & Evaluation Summary */
-          <div className="p-6 text-center">
-            <div className="w-16 h-16 rounded-xl bg-[#EEF3EE] border border-[#9AAA8F]/50 text-[#718C78] flex items-center justify-center mx-auto mb-4">
-              <Award className="w-8 h-8 text-[#718C78]" />
+          /* Assessment Completion & Verified Score Result */
+          <div className="p-6 text-center space-y-6">
+            <div className="w-16 h-16 rounded-full bg-[#1E2E44] border border-[#2563EB]/40 flex items-center justify-center mx-auto text-[#60A5FA]">
+              <Award className="w-8 h-8" />
             </div>
 
-            <h4 className="text-xl font-serif font-bold text-[#292A27] mb-1">
-              Assessment Completed
-            </h4>
-            <p className="text-sm text-[#6F706A] mb-5">
-              Based on your responses, here is your industry-calibrated proficiency in {skill.name}.
-            </p>
+            <div>
+              <span className="text-xs uppercase tracking-wider font-semibold text-[#60A5FA]">
+                Verification Complete
+              </span>
+              <h3 className="text-2xl font-serif font-bold text-[#FFFFFF] mt-1">
+                Your Evaluated {skill.name} Score:
+              </h3>
+            </div>
 
-            {/* Big Score Card */}
-            <div className="bg-[#FAF7F2] border border-[#DED8CE] p-5 rounded-xl max-w-sm mx-auto mb-6">
-              <div className="text-4xl font-serif font-bold text-[#718C78] mb-1">
+            {/* Big Score Card in Dark Tone */}
+            <div className="max-w-xs mx-auto p-6 rounded-2xl bg-[#0F1724] border border-[#223348] shadow-md">
+              <span className="text-5xl font-serif font-bold text-[#38BDF8] block">
                 {finalScore}%
-              </div>
-              <div className="inline-block px-3 py-1 rounded-md text-xs font-medium bg-[#EEF3EE] text-[#586F5E] border border-[#9AAA8F]/40 mb-2">
-                Level: {determineLevel(finalScore)}
-              </div>
-              <p className="text-xs text-[#6F706A] leading-relaxed">
-                {finalScore >= 80
-                  ? 'Strong technical mastery. Prepared for mid-level industry assignments.'
+              </span>
+              <span className="inline-block mt-2 px-3 py-1 rounded-md text-xs font-medium bg-[#1E2E44] text-[#60A5FA] border border-[#2563EB]/40">
+                Industry Level: {determineLevel(finalScore)}
+              </span>
+              <p className="text-xs text-[#94A3B8] mt-3">
+                {finalScore >= 70
+                  ? 'Strong practical foundation aligned with junior/associate industry requirements.'
                   : finalScore >= 50
-                  ? 'Solid foundational knowledge. Targeted project practice recommended to bridge remaining delta.'
-                  : 'Foundational baseline. Core programming concepts require focused practice.'}
+                  ? 'Moderate competence. Needs production testing and CI/CD best practice training.'
+                  : 'Foundational gaps detected. Recommend foundational curriculum track.'}
               </p>
             </div>
 
-            {/* Fast Score Simulation Slider */}
-            <div className="bg-[#FAF7F2] border border-[#DED8CE] p-4 rounded-xl max-w-md mx-auto mb-6 text-left">
-              <div className="flex justify-between items-center text-xs mb-1.5 font-medium">
-                <span className="text-[#292A27]">Simulate or Fine-Tune Score:</span>
-                <span className="text-[#718C78] font-bold">{finalScore}%</span>
+            {/* Direct Score Adjustment Slider (e.g., test Python at 60% as user requested) */}
+            <div className="max-w-md mx-auto p-4 bg-[#0F1724] rounded-xl border border-[#223348] text-left">
+              <div className="flex justify-between items-center mb-1 text-xs">
+                <span className="font-semibold text-[#FFFFFF]">Simulate Different Score:</span>
+                <span className="font-serif font-bold text-[#60A5FA]">{finalScore}%</span>
               </div>
               <input
-                id="score-slider"
+                id="modal-score-slider"
                 type="range"
-                min="10"
+                min="0"
                 max="100"
                 step="5"
                 value={finalScore}
-                onChange={(e) => setOverrideScore(parseInt(e.target.value, 10))}
-                className="w-full accent-[#718C78] h-2 bg-[#DED8CE] rounded-lg cursor-pointer"
+                onChange={(e) => setOverrideScore(parseInt(e.target.value))}
+                className="w-full h-2 bg-[#1E293B] rounded-lg appearance-none cursor-pointer accent-[#2563EB]"
               />
-              <div className="flex justify-between text-[10px] text-[#6F706A] mt-1">
-                <span>Beginner (30%)</span>
-                <span className="text-[#718C78] font-semibold">Prompt Example (60%)</span>
-                <span>Advanced (90%)</span>
+              <div className="flex justify-between text-[10px] text-[#64748B] mt-1">
+                <span>0% (Beginner)</span>
+                <span className="text-[#38BDF8] font-bold">60% (Python Prompt Target)</span>
+                <span>100% (Senior)</span>
               </div>
             </div>
 
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex justify-center gap-3 pt-3 border-t border-[#223348]">
               <button
                 onClick={onClose}
-                className="px-4 py-2.5 rounded-lg border border-[#DED8CE] text-[#6F706A] hover:text-[#292A27] hover:bg-[#FAF7F2] text-sm font-medium transition"
+                className="px-4 py-2 rounded-lg border border-[#2A3F58] text-[#94A3B8] hover:text-[#FFFFFF] text-xs font-medium cursor-pointer"
               >
-                Cancel
+                Discard
               </button>
               <button
-                id="save-skill-assessment-btn"
                 onClick={handleFinalize}
-                className="px-6 py-2.5 rounded-lg bg-[#C9826B] hover:bg-[#B26E58] text-[#FFFDFC] text-sm font-medium shadow-xs transition flex items-center gap-2 border border-[#B26E58]/30"
+                className="px-6 py-2 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-[#FFFFFF] text-xs font-medium transition shadow-xs cursor-pointer border border-[#3B82F6]/40"
               >
-                <CheckCircle className="w-4 h-4" />
-                <span>Save to Profile &amp; Map Career Gaps</span>
+                Save to Skills Portfolio
               </button>
             </div>
           </div>
