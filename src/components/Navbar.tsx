@@ -76,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 <GraduationCap className="w-4 h-4" />
-                <span>1. Student UI</span>
+                <span>1. Student Dashboard</span>
                 {studentSkillCount > 0 && (
                   <span
                     className={`ml-1 px-1.5 py-0.2 text-[10px] rounded font-semibold ${
@@ -101,7 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 {!canAccessRole('employer') && <Lock className="w-3 h-3 text-slate-400" />}
                 <Building2 className="w-4 h-4" />
-                <span>2. Employer UI</span>
+                <span>2. Employer Dashboard</span>
                 <span
                   className={`ml-1 px-1.5 py-0.2 text-[10px] rounded font-semibold ${
                     currentRole === 'employer'
@@ -124,7 +124,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 {!canAccessRole('government') && <Lock className="w-3 h-3 text-slate-400" />}
                 <Landmark className="w-4 h-4" />
-                <span>3. Government UI</span>
+                <span>3. Government Dashboard</span>
                 <span
                   className={`ml-1 px-1.5 py-0.2 text-[10px] rounded font-semibold ${
                     currentRole === 'government'

@@ -203,17 +203,17 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 Currently active:{' '}
                 <strong className="text-[#FFFFFF] capitalize font-serif font-bold">
                   {currentRole === 'student'
-                    ? '1. Student UI'
+                    ? '1. Student Dashboard'
                     : currentRole === 'employer'
-                    ? '2. Employer UI'
-                    : '3. Government UI'}
+                    ? '2. Employer Dashboard'
+                    : '3. Government Dashboard'}
                 </strong>
               </span>
             </div>
 
             {/* 3 Dark Tone Switcher Boxes */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Option 1: Student UI */}
+              {/* Option 1: Student Dashboard */}
               <button
                 type="button"
                 id="banner-switch-student"
@@ -246,7 +246,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     )}
                   </div>
                   <h2 className="text-base font-serif font-bold text-[#FFFFFF] mb-1">
-                    1. Student UI
+                    1. Student Dashboard
                   </h2>
                   <p className="text-xs text-[#94A3B8] leading-relaxed">
                     Evaluate skill proficiency (e.g. Python at 60%), select target career goals, and discover
@@ -261,7 +261,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 </div>
               </button>
 
-              {/* Option 2: Employer UI */}
+              {/* Option 2: Employer Dashboard */}
               <button
                 type="button"
                 id="banner-switch-employer"
@@ -294,7 +294,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     )}
                   </div>
                   <h2 className="text-base font-serif font-bold text-[#FFFFFF] mb-1">
-                    2. Employer UI
+                    2. Employer Dashboard
                   </h2>
                   <p className="text-xs text-[#94A3B8] leading-relaxed">
                     Validate resume claims against live interview outcomes, review on-ground parity
@@ -309,7 +309,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 </div>
               </button>
 
-              {/* Option 3: Government UI */}
+              {/* Option 3: Government Dashboard */}
               <button
                 type="button"
                 id="banner-switch-government"
@@ -342,7 +342,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     )}
                   </div>
                   <h2 className="text-base font-serif font-bold text-[#FFFFFF] mb-1">
-                    3. Government UI
+                    3. Government Dashboard
                   </h2>
                   <p className="text-xs text-[#94A3B8] leading-relaxed">
                     Compare regional market demand vs course capacity across districts, flag obsolete or

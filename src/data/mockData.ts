@@ -322,6 +322,74 @@ export const POPULAR_SKILLS: SkillItem[] = [
       },
     ],
   },
+  {
+    id: 'communication',
+    name: 'Communication Skills',
+    category: 'Professional & Soft Skills',
+    popular: true,
+    questions: [
+      {
+        id: 'comm-1',
+        question: 'When presenting technical architecture to non-technical executive stakeholders, which approach is most effective?',
+        options: [
+          'Use dense code snippets and explain low-level memory allocation in detail',
+          'Frame technical choices in terms of business impact, cost efficiency, user experience, and risk mitigation',
+          'Send a raw repository pull request and ask them to review the commit history',
+          'Avoid mentioning system limitations or potential failure modes entirely'
+        ],
+        correctIndex: 1,
+        explanation: 'Executive communication succeeds by translating engineering complexities into clear business outcomes, trade-offs, and ROI.',
+      },
+      {
+        id: 'comm-2',
+        question: 'In an asynchronous distributed engineering team, how should critical architectural decisions be communicated?',
+        options: [
+          'Brief hallway conversations with only the nearest colleagues',
+          'A clear written Architecture Decision Record (ADR) or RFC documenting context, options considered, and rationale',
+          'Posting brief cryptic comments in unrelated pull requests',
+          'Keeping the decision undocumented to maintain maximum agility'
+        ],
+        correctIndex: 1,
+        explanation: 'Writing formal ADRs or Request for Comments (RFCs) provides durable, searchable context and gives all stakeholders an opportunity to review asynchronous trade-offs.',
+      },
+      {
+        id: 'comm-3',
+        question: 'What is the primary characteristic of active listening during technical code reviews or design disagreements?',
+        options: [
+          'Immediately formulating your counter-argument while the other person is still speaking',
+          'Summarizing the other person’s perspective to ensure full understanding before offering constructive feedback',
+          'Remaining silent throughout the meeting and rejecting the pull request without explanation afterwards',
+          'Insisting that tenure overrides technical arguments'
+        ],
+        correctIndex: 1,
+        explanation: 'Active listening involves paraphrasing and clarifying the counter-party’s position first, fostering collaborative problem-solving rather than defensive confrontation.',
+      },
+      {
+        id: 'comm-4',
+        question: 'During a high-severity production outage, how should incident communications be structured for external customers and leadership?',
+        options: [
+          'Wait until the entire root cause investigation is finalized before sending any message',
+          'Provide prompt, empathetic updates at regular predictable intervals stating current impact, mitigation steps underway, and next update time',
+          'Blame specific junior engineers or third-party vendors in public status pages',
+          'Use ambiguous technical jargon to minimize perception of downtime'
+        ],
+        correctIndex: 1,
+        explanation: 'Effective incident communication requires predictable cadence, objective impact assessment, transparency, and clear expectations on when the next status report will occur.',
+      },
+      {
+        id: 'comm-5',
+        question: 'When writing a technical bug report or handoff documentation for cross-functional peers, what is essential?',
+        options: [
+          'Writing vague descriptions like "it is broken" without steps or environment details',
+          'Providing precise reproduction steps, expected vs actual behavior, error logs, and environmental context',
+          'Only providing a screenshot without descriptive text or reproduction path',
+          'Relying solely on verbal handover calls with no written trace'
+        ],
+        correctIndex: 1,
+        explanation: 'High-quality technical documentation eliminates ambiguity by providing exact reproduction steps, logs, expected behaviors, and environmental details.',
+      }
+    ],
+  },
 ];
 
 export const CAREER_GOALS: CareerGoal[] = [
@@ -330,7 +398,7 @@ export const CAREER_GOALS: CareerGoal[] = [
     title: 'Machine Learning Engineer',
     sector: 'Information Technology & AI',
     description: 'Design, train, and deploy production machine learning models and data pipelines at scale.',
-    averageSalary: '$95,000 - $145,000 / yr (₹14 - 28 LPA)',
+    averageSalary: '₹14 - 28 LPA',
     hiringDemand: 'High',
     growthRate: '+34% YoY',
     requiredSkills: [
@@ -347,7 +415,7 @@ export const CAREER_GOALS: CareerGoal[] = [
     title: 'Full-Stack Web Developer',
     sector: 'Software & Cloud Services',
     description: 'Build modern responsive web applications, backend APIs, microservices, and database schemas.',
-    averageSalary: '$85,000 - $130,000 / yr (₹10 - 22 LPA)',
+    averageSalary: '₹10 - 22 LPA',
     hiringDemand: 'High',
     growthRate: '+22% YoY',
     requiredSkills: [
@@ -363,7 +431,7 @@ export const CAREER_GOALS: CareerGoal[] = [
     title: 'Cloud DevOps & Platform Engineer',
     sector: 'Cloud & Infrastructure',
     description: 'Automate CI/CD pipelines, container orchestration, Kubernetes clusters, and multi-cloud reliability.',
-    averageSalary: '$98,000 - $150,000 / yr (₹15 - 30 LPA)',
+    averageSalary: '₹15 - 30 LPA',
     hiringDemand: 'High',
     growthRate: '+28% YoY',
     requiredSkills: [
@@ -379,7 +447,7 @@ export const CAREER_GOALS: CareerGoal[] = [
     title: 'Data Analyst & BI Specialist',
     sector: 'Data & Analytics',
     description: 'Transform complex business data into automated dashboards, SQL reports, and predictive insights.',
-    averageSalary: '$70,000 - $105,000 / yr (₹8 - 16 LPA)',
+    averageSalary: '₹8 - 16 LPA',
     hiringDemand: 'Medium',
     growthRate: '+18% YoY',
     requiredSkills: [

@@ -16,7 +16,7 @@ export interface QuizQuestion {
 export interface SkillItem {
   id: string;
   name: string;
-  category: 'Programming' | 'Data & AI' | 'Cloud & DevOps' | 'Design & Product' | 'Core Engineering';
+  category: 'Programming' | 'Data & AI' | 'Cloud & DevOps' | 'Design & Product' | 'Core Engineering' | 'Professional & Soft Skills';
   popular?: boolean;
   questions: QuizQuestion[];
 }
