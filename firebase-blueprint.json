@@ -1,0 +1,206 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User account and role profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "employer", "government"] },
+        "organization": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "StudentProfile": {
+      "title": "StudentProfile",
+      "description": "Extended student profile data",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "targetGoalId": { "type": "string" },
+        "enrolledCourses": { "type": "array" },
+        "enrolledBlueCollarCourses": { "type": "array" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId"]
+    },
+    "StudentAssessment": {
+      "title": "StudentAssessment",
+      "description": "Skill quiz assessment scores for students",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "skillId": { "type": "string" },
+        "skillName": { "type": "string" },
+        "score": { "type": "number" },
+        "level": { "type": "string" },
+        "assessedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "skillId", "skillName", "score"]
+    },
+    "Skill": {
+      "title": "Skill",
+      "description": "Catalog of verifiable technical skills and evaluation questions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "popular": { "type": "boolean" }
+      },
+      "required": ["id", "name", "category"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "Live industry job openings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "company": { "type": "string" },
+        "location": { "type": "string" },
+        "type": { "type": "string" },
+        "minExperience": { "type": "string" },
+        "salaryRange": { "type": "string" },
+        "description": { "type": "string" },
+        "requiredSkills": { "type": "array" },
+        "applicantsCount": { "type": "number" },
+        "postedDate": { "type": "string" }
+      },
+      "required": ["id", "title", "company", "requiredSkills"]
+    },
+    "JobApplication": {
+      "title": "JobApplication",
+      "description": "Applications submitted by students for job openings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "jobId": { "type": "string" },
+        "jobTitle": { "type": "string" },
+        "company": { "type": "string" },
+        "userId": { "type": "string" },
+        "applicantName": { "type": "string" },
+        "applicantEmail": { "type": "string" },
+        "matchingScore": { "type": "number" },
+        "appliedAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["submitted", "reviewed", "interviewing", "accepted"] }
+      },
+      "required": ["jobId", "userId", "appliedAt"]
+    },
+    "ParityReport": {
+      "title": "ParityReport",
+      "description": "Employer on-ground hiring parity audit reports",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "employerName": { "type": "string" },
+        "roleAssessed": { "type": "string" },
+        "industrySector": { "type": "string" },
+        "claimedSkillDescription": { "type": "string" },
+        "actualObservedGap": { "type": "string" },
+        "syllabusDeficiencyTag": { "type": "string" },
+        "recommendedCurriculumPatch": { "type": "string" },
+        "severity": { "type": "string", "enum": ["Critical", "Moderate", "Minor"] },
+        "votesAgree": { "type": "number" },
+        "verifiedAt": { "type": "string" },
+        "authorId": { "type": "string" }
+      },
+      "required": ["employerName", "roleAssessed", "actualObservedGap", "severity"]
+    },
+    "ReportVote": {
+      "title": "ReportVote",
+      "description": "User votes endorsing parity audit reports",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "reportId": { "type": "string" },
+        "userId": { "type": "string" },
+        "votedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reportId", "userId"]
+    },
+    "District": {
+      "title": "District",
+      "description": "Regional district workforce supply and demand telemetry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "districtId": { "type": "string" },
+        "districtName": { "type": "string" },
+        "state": { "type": "string" },
+        "activeJobPostings": { "type": "number" },
+        "unemploymentRate": { "type": "string" },
+        "primarySectors": { "type": "array" },
+        "topInDemandSkills": { "type": "array" }
+      },
+      "required": ["districtId", "districtName", "state"]
+    },
+    "CurriculumPatch": {
+      "title": "CurriculumPatch",
+      "description": "Curriculum modernization patches for vocational programs",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "districtId": { "type": "string" },
+        "courseTitle": { "type": "string" },
+        "provider": { "type": "string" },
+        "recommendedPatchModule": { "type": "string" },
+        "currentEnrolled": { "type": "number" },
+        "targetSkills": { "type": "array" },
+        "status": { "type": "string", "enum": ["draft", "proposed", "approved", "adopted"] },
+        "votesSupport": { "type": "number" },
+        "proposedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["districtId", "courseTitle", "recommendedPatchModule", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User accounts and assigned roles"
+    },
+    "/studentProfiles/{userId}": {
+      "schema": "StudentProfile",
+      "description": "Extended student profiles and target goals"
+    },
+    "/studentAssessments/{assessmentId}": {
+      "schema": "StudentAssessment",
+      "description": "Student evaluated scores and benchmarks"
+    },
+    "/skills/{skillId}": {
+      "schema": "Skill",
+      "description": "Skill catalog and scenario evaluations"
+    },
+    "/jobs/{jobId}": {
+      "schema": "Job",
+      "description": "Industry job openings and required scores"
+    },
+    "/jobApplications/{applicationId}": {
+      "schema": "JobApplication",
+      "description": "Job applications submitted by candidates"
+    },
+    "/parityReports/{reportId}": {
+      "schema": "ParityReport",
+      "description": "Employer on-ground hiring disparity reports"
+    },
+    "/reportVotes/{voteId}": {
+      "schema": "ReportVote",
+      "description": "Votes endorsing on-ground parity reports"
+    },
+    "/districts/{districtId}": {
+      "schema": "District",
+      "description": "Regional district workforce metrics"
+    },
+    "/curriculumPatches/{patchId}": {
+      "schema": "CurriculumPatch",
+      "description": "Proposed and adopted curriculum modernization patches"
+    }
+  }
+}
