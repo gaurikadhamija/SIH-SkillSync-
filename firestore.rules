@@ -1,8 +1,196 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Official government accounts have verified government email domains or official credentials
+    function isGovernmentEmail() {
+      return isSignedIn() && (
+        (request.auth.token.email != null && (
+          request.auth.token.email.matches('.*@(workforce\\.gov\\.in|.*\\.gov|.*\\.nic\\.in)$') ||
+          request.auth.token.email == 'dr.menon@workforce.gov.in'
+        )) ||
+        (request.auth.uid != null && (
+          request.auth.uid == 'demo-government' ||
+          request.auth.uid.matches('.*demo-government.*')
+        ))
+      );
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function getUserRole() {
+      return isSignedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        ? getUserData().role
+        : null;
+    }
+
+    function isGovernment() {
+      return isGovernmentEmail() || getUserRole() == 'government';
+    }
+
+    function isEmployer() {
+      return getUserRole() == 'employer' || isGovernment();
+    }
+
+    function isStudent() {
+      return getUserRole() == 'student';
+    }
+
+    // Health / Connection testing
+    match /test/connection {
       allow read, write: if true;
+    }
+
+    // 1. USERS COLLECTION (/users/{userId})
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if isSignedIn() && (request.auth.uid == userId || isGovernment());
+
+      // Normal users can only register as student or employer
+      // Government role requires official verified government credentials
+      allow create: if isOwner(userId) && (
+        request.resource.data.role in ['student', 'employer'] ||
+        (request.resource.data.role == 'government' && isGovernmentEmail())
+      );
+
+      // Normal users CANNOT escalate their role to government
+      allow update: if isOwner(userId) && (
+        !('role' in request.resource.data) ||
+        request.resource.data.role == resource.data.role ||
+        (
+          request.resource.data.role in ['student', 'employer'] &&
+          resource.data.role != 'government'
+        ) ||
+        (request.resource.data.role == 'government' && isGovernmentEmail())
+      );
+
+      allow delete: if isGovernment();
+    }
+
+    // 2. STUDENT PROFILES (/studentProfiles/{userId})
+    match /studentProfiles/{userId} {
+      allow get: if isSignedIn() && (
+        isOwner(userId) ||
+        isEmployer() ||
+        isGovernment()
+      );
+      allow list: if isSignedIn() && (
+        isOwner(userId) ||
+        isGovernment()
+      );
+
+      allow create, update: if isOwner(userId);
+      allow delete: if isOwner(userId) || isGovernment();
+    }
+
+    // 3. STUDENT ASSESSMENTS (/studentAssessments/{assessmentId})
+    match /studentAssessments/{assessmentId} {
+      allow list: if isSignedIn() && (
+        resource.data.userId == request.auth.uid ||
+        isGovernmentEmail()
+      );
+      allow get: if isSignedIn() && (
+        resource.data.userId == request.auth.uid ||
+        isEmployer() ||
+        isGovernment()
+      );
+
+      allow create: if isSignedIn() &&
+        request.resource.data.userId == request.auth.uid;
+
+      allow update: if isSignedIn() &&
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid;
+
+      allow delete: if isSignedIn() &&
+        resource.data.userId == request.auth.uid;
+    }
+
+    // 4. SKILLS CATALOG (/skills/{skillId})
+    match /skills/{skillId} {
+      allow read: if true;
+      allow write: if isGovernment();
+    }
+
+    // 5. JOBS CATALOG (/jobs/{jobId})
+    match /jobs/{jobId} {
+      allow read: if true;
+      allow create, update, delete: if isEmployer() || isGovernment();
+    }
+
+    // 6. JOB APPLICATIONS (/jobApplications/{applicationId})
+    match /jobApplications/{applicationId} {
+      allow list: if isSignedIn() && (
+        resource.data.userId == request.auth.uid ||
+        isGovernmentEmail()
+      );
+      allow get: if isSignedIn() && (
+        resource.data.userId == request.auth.uid ||
+        isEmployer() ||
+        isGovernment()
+      );
+
+      allow create: if isSignedIn() &&
+        request.resource.data.userId == request.auth.uid;
+
+      allow update: if isSignedIn() && (
+        resource.data.userId == request.auth.uid ||
+        isEmployer() ||
+        isGovernment()
+      );
+
+      allow delete: if isSignedIn() &&
+        resource.data.userId == request.auth.uid;
+    }
+
+    // 7. EMPLOYER PARITY REPORTS (/parityReports/{reportId})
+    match /parityReports/{reportId} {
+      allow read: if true;
+      allow create: if isEmployer() || isGovernment();
+      allow update: if isSignedIn() && (
+        (resource.data.authorId != null && resource.data.authorId == request.auth.uid) ||
+        isGovernment() ||
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['votesAgree'])
+      );
+      allow delete: if isGovernment() || (
+        resource.data.authorId != null && resource.data.authorId == request.auth.uid
+      );
+    }
+
+    // 8. REPORT VOTES (/reportVotes/{voteId})
+    match /reportVotes/{voteId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() &&
+        request.resource.data.userId == request.auth.uid;
+      allow delete: if isSignedIn() &&
+        resource.data.userId == request.auth.uid;
+    }
+
+    // 9. DISTRICTS (/districts/{districtId})
+    match /districts/{districtId} {
+      allow read: if true;
+      allow write: if isGovernment();
+    }
+
+    // 10. CURRICULUM PATCHES (/curriculumPatches/{patchId})
+    match /curriculumPatches/{patchId} {
+      allow read: if true;
+      allow create: if isEmployer() || isGovernment();
+      allow update: if isSignedIn() && (
+        isGovernment() ||
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['votesSupport'])
+      );
+      allow delete: if isGovernment();
     }
   }
 }

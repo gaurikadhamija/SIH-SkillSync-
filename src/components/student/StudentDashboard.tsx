@@ -24,6 +24,7 @@ import {
   submitJobApplication,
   subscribeStudentApplications,
   saveStudentAssessment,
+  subscribeJobs,
 } from '../../services/firestoreService';
 import {
   Sparkles,
@@ -64,6 +65,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const [jobFilter, setJobFilter] = useState<'all' | 'ready' | 'needs_upskill'>('all');
   const [enrolledCourses, setEnrolledCourses] = useState<string[]>([]);
   const [applications, setApplications] = useState<JobApplicationRecord[]>([]);
+  const [jobOpenings, setJobOpenings] = useState<JobOpening[]>(MOCK_JOB_OPENINGS);
   const [applyingJobId, setApplyingJobId] = useState<string | null>(null);
   const [applicationSuccessMsg, setApplicationSuccessMsg] = useState<string | null>(null);
 
@@ -80,11 +82,21 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     });
 
     // Subscribe to applications
-    const unsubscribe = subscribeStudentApplications(currentUser.uid, (apps) => {
+    const unsubscribeApps = subscribeStudentApplications(currentUser.uid, (apps) => {
       setApplications(apps);
     });
 
-    return () => unsubscribe();
+    // Subscribe to real-time jobs in Firestore
+    const unsubscribeJobs = subscribeJobs((jobs) => {
+      if (jobs.length > 0) {
+        setJobOpenings(jobs);
+      }
+    });
+
+    return () => {
+      unsubscribeApps();
+      unsubscribeJobs();
+    };
   }, [currentUser?.uid]);
 
   const handleSelectGoal = (goalId: string) => {
@@ -243,7 +255,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const overallReadiness = Math.round((earnedPoints / (totalRequiredPoints || 1)) * 100);
 
   // Dynamic Job Match Score Calculation based on current skills
-  const calculatedJobs = MOCK_JOB_OPENINGS.map((job) => {
+  const calculatedJobs = jobOpenings.map((job) => {
     const matchedCount = job.requiredSkills.reduce((acc, reqSkill) => {
       const userSkill = assessedSkills.find(
         (s) => s.skillName.toLowerCase() === reqSkill.toLowerCase()

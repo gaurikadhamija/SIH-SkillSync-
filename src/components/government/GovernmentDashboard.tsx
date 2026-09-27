@@ -46,7 +46,7 @@ import {
 } from 'lucide-react';
 
 export const GovernmentDashboard: React.FC = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, getIdToken } = useAuth();
   // Persistent Districts state from Firestore
   const [districtsList, setDistrictsList] = useState<DistrictMarketData[]>(DISTRICT_MARKET_DATA);
   // District Filter
@@ -67,6 +67,7 @@ export const GovernmentDashboard: React.FC = () => {
   // Report Modal
   const [showReportModal, setShowReportModal] = useState(false);
   const [isExportingReport, setIsExportingReport] = useState(false);
+  const [backendReport, setBackendReport] = useState<any>(null);
 
   // Subscribe to live districts from Cloud Firestore
   useEffect(() => {
@@ -170,22 +171,36 @@ export const GovernmentDashboard: React.FC = () => {
   const handleExportDistrictReport = async () => {
     setIsExportingReport(true);
     try {
-      await fetch('/api/export-district-report', {
+      const token = await getIdToken();
+      const res = await fetch('/api/export-district-report', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           districtName: currentDistrict.districtName,
           activeJobPostings: currentDistrict.activeJobPostings,
           unemploymentRate: currentDistrict.unemploymentRate,
           uncoveredSkillsCount: uncoveredSkills.length,
-          generatedBy: currentUser?.displayName || 'National Skill Alignment Council'
+          generatedBy: currentUser?.displayName || 'Dr. V. Menon (Director of Workforce Telemetry)'
         })
       });
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        alert(errJson.message || 'Access Denied: Only authenticated Government Workforce Officials can export official state action plans.');
+        return;
+      }
+
+      const data = await res.json();
+      setBackendReport(data.report);
+      setShowReportModal(true);
     } catch (e) {
-      console.warn('API report call fallback to client modal:', e);
+      console.warn('API report call error:', e);
+      setShowReportModal(true);
     } finally {
       setIsExportingReport(false);
-      setShowReportModal(true);
     }
   };
 
@@ -851,6 +866,7 @@ export const GovernmentDashboard: React.FC = () => {
         <DistrictReportModal
           district={currentDistrict}
           courses={courses}
+          backendReport={backendReport}
           onClose={() => setShowReportModal(false)}
         />
       )}

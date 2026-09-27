@@ -5,12 +5,24 @@ import { Printer, X, Landmark, AlertTriangle, CheckCircle2, TrendingUp } from 'l
 interface DistrictReportModalProps {
   district: DistrictMarketData;
   courses: ExistingCourse[];
+  backendReport?: {
+    reportId?: string;
+    status?: string;
+    digitalSignature?: string;
+    authorizedOfficial?: {
+      name?: string;
+      email?: string;
+      clearanceLevel?: string;
+    };
+    timestamp?: string;
+  };
   onClose: () => void;
 }
 
 export const DistrictReportModal: React.FC<DistrictReportModalProps> = ({
   district,
   courses,
+  backendReport,
   onClose,
 }) => {
   const uncoveredSkills = district.topInDemandSkills.filter(
@@ -70,12 +82,18 @@ export const DistrictReportModal: React.FC<DistrictReportModalProps> = ({
                   District Skill Gap &amp; Curriculum Modernization Action Plan: {district.districtName} ({district.state})
                 </h1>
                 <p className="text-xs text-[#94A3B8] print:text-gray-600 mt-1">
-                  Report Identifier: DSD-ALGN-{district.districtId.toUpperCase()}-2026-Q3 • Generated on {new Date().toLocaleDateString()}
+                  Report Identifier: {backendReport?.reportId || `DSD-ALGN-${district.districtId.toUpperCase()}-2026-Q3`} • Generated on {backendReport?.timestamp ? new Date(backendReport.timestamp).toLocaleString() : new Date().toLocaleDateString()}
                 </p>
+                {backendReport?.digitalSignature && (
+                  <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-400 font-mono">
+                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                    <span>Backend Verified: {backendReport.digitalSignature} • Officer: {backendReport.authorizedOfficial?.name || 'Verified Official'}</span>
+                  </div>
+                )}
               </div>
               <div className="text-right hidden sm:block">
                 <span className="text-xs font-medium px-2.5 py-1 rounded-md bg-[#131D2A] print:bg-gray-100 print:text-black text-[#FFFFFF] border border-[#223348] print:border-gray-300">
-                  Status: Priority Executive Review
+                  Status: {backendReport?.status || 'Priority Executive Review'}
                 </span>
               </div>
             </div>

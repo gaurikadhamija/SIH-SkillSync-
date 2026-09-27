@@ -4,12 +4,23 @@ import {
   signInWithPopup, 
   signOut, 
   signInAnonymously,
-  updateProfile,
   User as FirebaseUser
 } from 'firebase/auth';
 import { auth, googleProvider, DEMO_USERS } from '../lib/firebase';
 import { getUserProfile, setUserProfile, seedInitialFirestoreData } from '../services/firestoreService';
 import { DashboardRole, UserProfile } from '../types';
+
+export const isEmailGovernmentAuthorized = (email?: string | null): boolean => {
+  if (!email) return false;
+  const normalized = email.toLowerCase().trim();
+  return (
+    normalized.endsWith('@workforce.gov.in') ||
+    normalized.endsWith('.gov.in') ||
+    normalized.endsWith('.gov') ||
+    normalized.endsWith('.nic.in') ||
+    normalized === 'dr.menon@workforce.gov.in'
+  );
+};
 
 interface AuthContextType {
   firebaseUser: FirebaseUser | null;
@@ -21,6 +32,8 @@ interface AuthContextType {
   signOutUser: () => Promise<void>;
   setCurrentRole: (role: DashboardRole) => Promise<void>;
   canAccessRole: (role: DashboardRole) => boolean;
+  isGovernmentAuthorized: () => boolean;
+  getIdToken: () => Promise<string | null>;
   authError: string | null;
   clearAuthError: () => void;
 }
@@ -48,7 +61,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           let profile = await getUserProfile(fbUser.uid);
           if (!profile) {
             // New user, create initial profile
-            const savedRole = (localStorage.getItem('skillsync_user_role') as DashboardRole) || 'student';
+            let savedRole = (localStorage.getItem('skillsync_user_role') as DashboardRole) || 'student';
+            // Security check: Government role cannot be claimed via localStorage
+            if (savedRole === 'government' && !isEmailGovernmentAuthorized(fbUser.email)) {
+              savedRole = 'student';
+              localStorage.setItem('skillsync_user_role', 'student');
+            }
+
             profile = {
               uid: fbUser.uid,
               email: fbUser.email || `${fbUser.uid.slice(0, 8)}@user.skillsync.edu`,
@@ -59,6 +78,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               createdAt: new Date().toISOString()
             };
             await setUserProfile(profile);
+          } else {
+            // Verify if stored role is government, check email authorization
+            if (profile.role === 'government' && !isEmailGovernmentAuthorized(profile.email)) {
+              profile.role = 'student';
+              await setUserProfile(profile);
+            }
           }
           setCurrentUser(profile);
           setRoleState(profile.role);
@@ -68,8 +93,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       } else {
         setFirebaseUser(null);
-        // Fallback default demo student if not logged in
-        const storedRole = (localStorage.getItem('skillsync_user_role') as DashboardRole) || 'student';
+        let storedRole = (localStorage.getItem('skillsync_user_role') as DashboardRole) || 'student';
+        if (storedRole === 'government') {
+          storedRole = 'student';
+          localStorage.setItem('skillsync_user_role', 'student');
+        }
         setRoleState(storedRole);
         const demoUser = DEMO_USERS[storedRole];
         setCurrentUser({
@@ -99,7 +127,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const result = await signInWithPopup(auth, googleProvider);
       if (result.user) {
         const existingProfile = await getUserProfile(result.user.uid);
-        const roleToAssign = existingProfile ? existingProfile.role : preferredRole;
+        let roleToAssign = existingProfile ? existingProfile.role : preferredRole;
+
+        // Security check: Government role requires verified government email
+        if (roleToAssign === 'government' && !isEmailGovernmentAuthorized(result.user.email)) {
+          roleToAssign = 'student';
+          setAuthError('Government role requires a verified government domain email (@workforce.gov.in / .gov.in). Assigned Student role.');
+        }
+
         const profile: UserProfile = {
           uid: result.user.uid,
           email: result.user.email || '',
@@ -117,7 +152,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (err: unknown) {
       console.error('[AuthContext] Google Sign-In error:', err);
       const message = err instanceof Error ? err.message : 'Google sign-in was interrupted';
-      // If popup was blocked or iframe restriction
       if (message.includes('popup') || message.includes('cancelled') || message.includes('blocked')) {
         setAuthError('Google sign-in popup was blocked or closed. You can also sign in instantly using the demo credentials below.');
       } else {
@@ -132,7 +166,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setAuthError(null);
       setLoading(true);
-      localStorage.setItem('skillsync_user_role', role);
+
+      const demoConfig = DEMO_USERS[role];
 
       // Sign in anonymously to get a genuine Firebase Auth session
       let uid = `demo-${role}`;
@@ -147,7 +182,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.warn('[AuthContext] Anonymous auth fallback:', authErr);
       }
 
-      const demoConfig = DEMO_USERS[role];
       const profile: UserProfile = {
         uid,
         email: demoConfig.email,
@@ -157,6 +191,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         createdAt: new Date().toISOString()
       };
 
+      localStorage.setItem('skillsync_user_role', role);
       await setUserProfile(profile);
       setCurrentUser(profile);
       setRoleState(role);
@@ -175,7 +210,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setFirebaseUser(null);
       setCurrentUser(null);
       localStorage.removeItem('skillsync_user_role');
-      // Reset to default student role
       setRoleState('student');
     } catch (err) {
       console.error('[AuthContext] Sign out error:', err);
@@ -185,6 +219,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const setCurrentRole = async (role: DashboardRole) => {
+    if (role === 'government') {
+      const isGov = isEmailGovernmentAuthorized(currentUser?.email || firebaseUser?.email);
+      if (!isGov) {
+        setAuthError('Government Clearance Required: You cannot switch to the Government role without an official government email domain (@workforce.gov.in / .gov.in).');
+        return;
+      }
+    }
+
     setRoleState(role);
     localStorage.setItem('skillsync_user_role', role);
     if (currentUser) {
@@ -202,10 +244,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Role Protection Logic:
-  // - Students cannot access Employer or Government dashboards
-  // - Employers cannot access Government dashboard
-  // - Government can access all dashboards for auditing
   const canAccessRole = (targetRole: DashboardRole): boolean => {
     if (!currentUser) return targetRole === 'student';
 
@@ -216,7 +254,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     if (userRole === 'employer') {
-      return targetRole === 'employer' || targetRole === 'student'; // Can review student tests & employer parity
+      return targetRole === 'employer' || targetRole === 'student';
     }
 
     if (userRole === 'student') {
@@ -224,6 +262,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     return false;
+  };
+
+  const isGovernmentAuthorized = (): boolean => {
+    return isEmailGovernmentAuthorized(currentUser?.email || firebaseUser?.email);
+  };
+
+  const getIdToken = async (): Promise<string | null> => {
+    if (auth.currentUser) {
+      try {
+        return await auth.currentUser.getIdToken();
+      } catch (e) {
+        console.warn('[AuthContext] Note on Firebase ID token retrieval:', e);
+      }
+    }
+    if (currentRole === 'government') {
+      return 'demo-government-token';
+    }
+    if (currentRole === 'employer') {
+      return 'demo-employer-token';
+    }
+    return 'demo-student-token';
   };
 
   return (
@@ -238,6 +297,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         signOutUser,
         setCurrentRole,
         canAccessRole,
+        isGovernmentAuthorized,
+        getIdToken,
         authError,
         clearAuthError: () => setAuthError(null)
       }}
